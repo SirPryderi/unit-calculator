@@ -1,8 +1,14 @@
 import { Typography } from "@mui/material";
 import Team from "../model/Team";
+import Unit from "../model/Unit";
 import UnitView from "./UnitView";
 
-const TeamView = (props: { team: Team }) => (
+export type TeamViewProps = {
+  team: Team;
+  openUnitDetails: (unit: Unit) => void;
+};
+
+const TeamView = (props: TeamViewProps) => (
   <>
     <Typography variant="h4">
       {props.team.name} ({props.team.units.length} units)
@@ -10,7 +16,7 @@ const TeamView = (props: { team: Team }) => (
 
     <div className="team-view">
       {props.team.getAllUnits().map((unit) => (
-        <UnitView unit={unit} key={unit.id} />
+        <UnitView unit={unit} key={unit.id} onClick={props.openUnitDetails} />
       ))}
     </div>
   </>

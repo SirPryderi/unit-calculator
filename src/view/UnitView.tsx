@@ -3,9 +3,10 @@ import Unit from "../model/Unit";
 
 export type UnitViewProps = {
   unit: Unit;
+  onClick: (unit: Unit) => void;
 };
 
-const UnitView = ({ unit }: UnitViewProps) => {
+const UnitView = ({ unit, onClick }: UnitViewProps) => {
   return (
     <Box
       key={unit.id}
@@ -14,6 +15,7 @@ const UnitView = ({ unit }: UnitViewProps) => {
         display: "inline-flex",
         background: "text.secondary",
       }}
+      onClick={() => onClick(unit)}
     >
       {unit.isAlive() && (
         <CircularProgress
