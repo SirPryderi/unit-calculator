@@ -1,5 +1,6 @@
 import Team from "./Team";
 import { TeamFormValues } from "./TeamFormValues";
+import Unit from "./Unit";
 
 class Battle {
   public team1: Team;
@@ -30,14 +31,7 @@ class Battle {
         if (unit.health <= 0) return;
         unit.doAttack();
         if (unit.target && unit.target?.health <= 0) {
-          // remove unit from team
-          if (this.team1.units.includes(unit.target)) {
-            this.team1.removeUnit(unit.target);
-            this.team1.addToKilledUnits(unit.target);
-          } else if (this.team2.units.includes(unit.target)) {
-            this.team2.removeUnit(unit.target);
-            this.team2.addToKilledUnits(unit.target);
-          }
+          this.removeUnit(unit.target, true);
           unit.target = undefined;
         }
       });
@@ -61,6 +55,17 @@ class Battle {
     if (this.team1.units.length === 0) return this.team2;
     if (this.team2.units.length === 0) return this.team1;
     return null;
+  }
+
+  removeUnit(unit: Unit, kill = false) {
+    // remove unit from team
+    if (this.team1.units.includes(unit)) {
+      this.team1.removeUnit(unit);
+      if (kill) this.team1.addToKilledUnits(unit);
+    } else if (this.team2.units.includes(unit)) {
+      this.team2.removeUnit(unit);
+      if (kill) this.team2.addToKilledUnits(unit);
+    }
   }
 }
 

@@ -15,6 +15,16 @@ const BattleView = (props: BattleViewProps) => {
     setOpenUnit(unit);
   };
 
+  const handleKill = (unit: Unit) => {
+    props.battleController.handleKill(unit);
+    setOpenUnit(null);
+  }
+
+  const handleDelete = (unit: Unit) => {
+    props.battleController.handleDelete(unit);
+    setOpenUnit(null);
+  }
+
   if (!battle) return null;
 
   return (
@@ -29,7 +39,12 @@ const BattleView = (props: BattleViewProps) => {
       )}
       <TeamView team={battle.team1} openUnitDetails={openUnitDetails} />
       <TeamView team={battle.team2} openUnitDetails={openUnitDetails} />
-      <UnitDetailsModal openUnit={openUnit} onClose={() => setOpenUnit(null)} />
+      <UnitDetailsModal
+        openUnit={openUnit}
+        onClose={() => setOpenUnit(null)}
+        onKill={handleKill}
+        onDelete={handleDelete}
+      />
     </>
   );
 };

@@ -22,7 +22,7 @@ const UnitView = ({ unit, onClick }: UnitViewProps) => {
           variant="determinate"
           value={(unit.health / unit.maxHealth) * 100}
           thickness={5}
-          color="secondary"
+          color="error"
         />
       )}
       <Box

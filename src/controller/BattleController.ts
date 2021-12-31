@@ -1,5 +1,6 @@
 import Battle from "../model/Battle";
 import { TeamFormValues } from "../model/TeamFormValues";
+import Unit from "../model/Unit";
 
 class BattleController {
   private onUpdate: (battle: Battle | null) => void;
@@ -34,6 +35,23 @@ class BattleController {
   };
 
   getBattle = () => this.battle;
+
+  handleKill(unit: Unit) {
+    if (!this.battle) return;
+    unit.health = 0;
+    const battle = this.battle.clone();
+    battle.removeUnit(unit, true);
+    this.battle = battle;
+    this.update();
+  }
+
+  handleDelete(unit: Unit) {
+    if (!this.battle) return;
+    const battle = this.battle.clone();
+    battle.removeUnit(unit);
+    this.battle = battle;
+    this.update();
+  }
 
   private update = () => {
     this.onUpdate(this.battle);
