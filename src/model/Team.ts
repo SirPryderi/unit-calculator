@@ -1,8 +1,13 @@
-import { random } from "./random";
 import { TeamFormValues } from "./TeamFormValues";
 import Unit from "./Unit";
 
 class Team {
+  private killedUnits: Unit[] = [];
+
+  constructor(public name: string, public units: Unit[]) {
+    this.units = units;
+  }
+
   static makeTeam(teamValues: TeamFormValues): Team {
     return new Team(
       teamValues.name,
@@ -21,12 +26,14 @@ class Team {
     );
   }
 
-  constructor(public name: string, public units: Unit[]) {
-    this.units = units;
-  }
-
   getUnits(): Unit[] {
     return this.units;
+  }
+
+  getAllUnits(): Unit[] {
+    return [...this.units, ...this.killedUnits].sort(
+      (a, b) => a.initiative - b.initiative
+    );
   }
 
   getRandomUnit(): Unit {
@@ -35,6 +42,10 @@ class Team {
 
   removeUnit(target: Unit) {
     this.units = this.units.filter((unit) => unit !== target);
+  }
+
+  addToKilledUnits(unit: Unit) {
+    this.killedUnits.push(unit);
   }
 }
 export default Team;

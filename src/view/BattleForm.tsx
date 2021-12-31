@@ -1,3 +1,4 @@
+import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 import BattleController from "../controller/BattleController";
 import { TeamFormValues } from "../model/TeamFormValues";
@@ -30,14 +31,23 @@ const BattleForm = (props: BattleFormProps) => {
 
   return (
     <div>
-      <h1>Battle Form</h1>
+      <Typography variant="h3" textAlign="center" mb={4}>
+        Battle Form
+      </Typography>
       <form onSubmit={handleSubmit}>
         <div className="battle-form">
           <TeamForm onChange={setTeam1Values} initialValues={team1Values} />
-          <div style={{margin: 20}}>vs</div>
+          <Typography sx={{ margin: 2 }}>vs</Typography>
           <TeamForm onChange={setTeam2Values} initialValues={team2Values} />
         </div>
-        <button onClick={handleSubmit}>Start Battle</button>
+        <Button
+          onClick={handleSubmit}
+          variant="contained"
+          fullWidth={true}
+          size="large"
+        >
+          Start Battle
+        </Button>
       </form>
     </div>
   );

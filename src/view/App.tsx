@@ -1,11 +1,13 @@
+import { Container } from "@mui/material";
 import { useState } from "react";
-import "./App.css";
-import Battle from "../model/Battle";
-import BattleView from "./BattleView";
 import BattleController from "../controller/BattleController";
+import Battle from "../model/Battle";
+import "./App.css";
+import AppBar from "./AppBar";
 import BattleForm from "./BattleForm";
+import BattleView from "./BattleView";
 
-function App() {
+const App = () => {
   const [battleController] = useState(
     new BattleController((battle) => {
       setBattle(battle);
@@ -14,16 +16,17 @@ function App() {
   const [battle, setBattle] = useState<Battle | null>(null);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <>
+      <AppBar battleController={battleController} />
+      <Container maxWidth={battle ? undefined : "sm"} sx={{ mt: 5 }}>
         {battle ? (
           <BattleView battleController={battleController} />
         ) : (
           <BattleForm battleController={battleController} />
         )}
-      </header>
-    </div>
+      </Container>
+    </>
   );
-}
+};
 
 export default App;

@@ -1,3 +1,4 @@
+import { Alert, Typography } from "@mui/material";
 import BattleController from "../controller/BattleController";
 import TeamView from "./TeamView";
 
@@ -9,19 +10,18 @@ const BattleView = (props: BattleViewProps) => {
   if (!battle) return null;
 
   return (
-    <div>
-      {battle.isOver() ? (
-        <button onClick={props.battleController.reset}>Reset</button>
-      ) : (
-        <div>
-          <button onClick={props.battleController.nextTurn}>Next Turn</button>
-          <button onClick={props.battleController.reset}>Reset</button>
-        </div>
+    <>
+      <Typography variant="h3" textAlign="center" mb={4}>
+        Turn {battle.turnCount}
+      </Typography>
+      {battle.isOver() && (
+        <Alert severity="success" sx={{ mb: 4}}>
+          {battle.getWinner()!.name} won the battle!
+        </Alert>
       )}
-      <h1>Turn {battle.turnCount}</h1>
       <TeamView team={battle.team1} />
       <TeamView team={battle.team2} />
-    </div>
+    </>
   );
 };
 

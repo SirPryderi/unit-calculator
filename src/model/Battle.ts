@@ -31,8 +31,13 @@ class Battle {
         unit.doAttack();
         if (unit.target && unit.target?.health <= 0) {
           // remove unit from team
-          this.team1.removeUnit(unit.target);
-          this.team2.removeUnit(unit.target);
+          if (this.team1.units.includes(unit.target)) {
+            this.team1.removeUnit(unit.target);
+            this.team1.addToKilledUnits(unit.target);
+          } else if (this.team2.units.includes(unit.target)) {
+            this.team2.removeUnit(unit.target);
+            this.team2.addToKilledUnits(unit.target);
+          }
           unit.target = undefined;
         }
       });
@@ -50,6 +55,12 @@ class Battle {
 
   isOver() {
     return this.team1.units.length === 0 || this.team2.units.length === 0;
+  }
+
+  getWinner() {
+    if (this.team1.units.length === 0) return this.team2;
+    if (this.team2.units.length === 0) return this.team1;
+    return null;
   }
 }
 

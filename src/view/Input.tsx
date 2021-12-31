@@ -1,29 +1,38 @@
-import { useFormikContext } from "formik";
+import { InputAdornment } from "@mui/material";
+import { Field } from "formik";
+import { TextField } from "formik-mui";
 import React from "react";
 
 export type InputProps = {
   type: React.HTMLInputTypeAttribute;
   fieldName: string;
+  label?: string;
+  icon?: React.ReactElement;
 };
 
-const Input = <T extends Record<string, any>>(props: InputProps) => {
-  const formik = useFormikContext<T>();
-
+const Input = (props: InputProps) => {
   return (
-    <div>
-      <label htmlFor={props.fieldName}>{props.fieldName}</label>
-      <br />
-      <input
-        type={props.type}
-        name={props.fieldName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        value={formik.values[props.fieldName]}
-      />
-      {formik.errors[props.fieldName] &&
-        formik.touched[props.fieldName] &&
-        formik.errors[props.fieldName]}
-    </div>
+    <Field
+      component={TextField}
+      name={props.fieldName}
+      type={props.type}
+      label={props.label || props.fieldName}
+      margin="normal"
+      variant="standard"
+      fullWidth={true}
+      InputProps={
+        props.icon
+          ? {
+              startAdornment: (
+                <InputAdornment position="start">{props.icon}</InputAdornment>
+              ),
+            }
+          : undefined
+      }
+    />
+    // {formik.errors[props.fieldName] &&
+    //   formik.touched[props.fieldName] &&
+    //   formik.errors[props.fieldName]}
   );
 };
 

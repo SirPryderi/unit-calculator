@@ -29,6 +29,10 @@ class BattleController {
     this.update();
   };
 
+  isOngoing = () => {
+    return this.battle !== null && !this.battle.isOver();
+  };
+
   getBattle = () => this.battle;
 
   private update = () => {

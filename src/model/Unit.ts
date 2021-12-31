@@ -5,6 +5,7 @@ class Unit {
   public id: string;
   public initiative: number;
   public target?: Unit;
+  public maxHealth: number;
 
   constructor(
     public name: string,
@@ -20,6 +21,7 @@ class Unit {
     this.id = uuidv4();
     this.initiative = random(1, 20);
     this.health = health;
+    this.maxHealth = health;
     this.defence = defence;
     this.attack = attack;
     this.damage = damage;
@@ -44,6 +46,10 @@ class Unit {
         console.log("  target is dead!");
       }
     }
+  }
+
+  isAlive() {
+    return this.health > 0;
   }
 }
 
